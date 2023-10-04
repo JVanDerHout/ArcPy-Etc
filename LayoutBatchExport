@@ -1,0 +1,10 @@
+#create new notebook in ArcGIS Pro
+#replace line 10 with actual file path for desired export folder
+
+import arcpy,os
+
+aprx = arcpy.mp.ArcGISProject("CURRENT")
+
+for lyt in aprx.listLayouts():
+
+  lyt.exportToPDF(os.path.join(r"file path", f"{lyt.name}"), clip_to_elements=False)
