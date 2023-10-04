@@ -1,0 +1,50 @@
+#watershed delineation in arcpy
+#this is an untested work in progress
+
+import arcpy
+from arcpy.sa import *
+
+# Set the workspace and output coordinate system
+arcpy.env.workspace = r"\\DOBBY\mw\Projects_Working\Platte_Elwood\GIS\ArcHydro_Trial"
+arcpy.env.outputCoordinateSystem = arcpy.SpatialReference(26915)  # WKID for NAD 1983 UTM Zone 14N, replace as needed
+
+# Input DEM
+dem = "LiDAR.tif"
+
+# Step 1: Fill sinks
+filled_dem = Fill(dem)
+
+# Step 2: Flow direction
+flow_direction = FlowDirection(filled_dem)
+
+# Step 3: Flow accumulation
+flow_accumulation = FlowAccumulation(flow_direction)
+
+# Step 4: Stream definition
+stream_threshold = 1000  # You can adjust this threshold as needed
+streams = Con(flow_accumulation > stream_threshold, 1)
+
+# Step 5: Catchment Grid Delineation
+catchment_grid = Watershed(flow_direction, streams)
+
+# Step 6: Catchment polygon processing
+arcpy.RasterToPolygon_conversion(catchment_grid, "CatchmentPolygons.shp", "SIMPLIFY", "VALUE")
+
+# Step 7: Drainage point processing
+outlets = "OutletPoints.shp"  # Specify the outlet points shapefile
+snap_distance = "100 Meters"  # Adjust the snap distance as needed
+snap_points = SnapPourPoint(outlets, flow_accumulation, snap_distance)
+arcpy.RasterToPolygon_conversion(snap_points, "OutletSnapPolygons.shp", "NO_SIMPLIFY")
+
+# Step 8: Adjoint catchment processing
+adjoint_catchments = SnapPourPoint(snap_points, flow_direction, "100 Meters")
+arcpy.RasterToPolygon_conversion(adjoint_catchments, "AdjointCatchmentPolygons.shp", "NO_SIMPLIFY")
+
+# Step 9: Watershed delineation
+watersheds = Watershed(flow_direction, snap_points)
+arcpy.RasterToPolygon_conversion(watersheds, "WatershedPolygons.shp", "NO_SIMPLIFY")
+
+# Optional: If you want to export the results as a GeoTIFF
+arcpy.RasterToOtherFormat_conversion(watersheds, "Watershed.tif", "TIFF")
+
+print("Watershed delineation complete.")
