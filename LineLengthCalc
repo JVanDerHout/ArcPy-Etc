@@ -5,3 +5,8 @@ with arcpy.da.SearchCursor("lines", ["SHAPE@LENGTH"]) as c:
         print("distance: {:0.2f}".format(seg))
         total += seg
     print("Total distance: {:0.2f}".format(total))
+
+#this code is to calculate the length of SELECTED lines in ArcGIS Pro
+#make sure to replace "lines" with the name of your line file 
+#also check the units of the the line feature and edit the division value in line 4 as needed
+#current line 4 is set up for meters
