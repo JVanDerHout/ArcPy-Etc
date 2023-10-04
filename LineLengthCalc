@@ -1,0 +1,7 @@
+with arcpy.da.SearchCursor("lines", ["SHAPE@LENGTH"]) as c:
+    total = 0
+    for r in c:
+        seg = r[0] /1000
+        print("distance: {:0.2f}".format(seg))
+        total += seg
+    print("Total distance: {:0.2f}".format(total))
