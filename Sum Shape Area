@@ -1,0 +1,20 @@
+# Set the workspace environment to the folder where your data is stored
+aprx = arcpy.mp.ArcGISProject("CURRENT")
+arcpy.env.workspace = aprx.defaultGeodatabase
+
+# Set the name of your feature class or layer
+fc = "RiparianBuff_new"
+
+# Create a list to store the values in the "Shape_Area" field
+area_values = []
+
+# Use a Search Cursor to iterate through each row and extract the values in the "Shape_Area" field
+with arcpy.da.SearchCursor(fc, "Shape_Area") as cursor:
+    for row in cursor:
+        area_values.append(row[0])
+
+# Calculate the sum of the values in the "Shape_Area" field
+total_sum = sum(area_values)
+
+# Print the sum
+print(f"The sum of all values in the 'Shape_Area' field is: {total_sum}")
