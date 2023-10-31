@@ -1,0 +1,6 @@
+#to change the prefix of your file
+#1. navigate to your file path in windows 
+#2. hold alt + f and open windows powershell
+#3. paste in below code after file path name in powershell
+#4. replace PREFIX with desired name
+Rename-Item -NewName {$_.Name -replace "^","PREFIX"}
