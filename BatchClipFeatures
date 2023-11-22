@@ -1,0 +1,38 @@
+#This code is to batch clip feature data
+#It requires the input data to all be at the same level within the folder
+
+def BatchClip(input_folder, clip_features, output_folder):
+    arcpy.env.workspace = input_folder
+    
+    input_features = arcpy.ListFeatureClasses()  # Lists all feature classes in the input folder
+    
+    for feature in input_features:
+        # Create a unique output feature class name for each input feature class
+        output_name = "Clip_" + feature  # Modify this naming convention as needed
+        output_path = arcpy.ValidateTableName(output_name)
+        
+        # Perform the clip operation
+        arcpy.analysis.Clip(in_features=feature,
+                            clip_features=clip_features,
+                            out_feature_class=output_folder + "\\" + output_path,
+                            cluster_tolerance=0)  # Set the appropriate tolerance
+        
+        # Check the geometry type and ensure it's set to POLYGON
+        arcpy.management.AddField(output_folder + "\\" + output_path, "TestField", "TEXT")  # Add a test field (replace with your actual fields)
+        
+        # Transfer attribute information (for instance, a test field)
+        with arcpy.da.UpdateCursor(output_folder + "\\" + output_path, ["TestField"]) as cursor:
+            for row in cursor:
+                row[0] = "TestValue"  # Modify or transfer actual attribute information
+                cursor.updateRow(row)
+    
+    return
+input_folder = r"G:\U-Z\USFWS_CowCreekConceptualFishPassageDesign_230249\GIS\Feature_Data\ToBeClipped" # Replace with your 
+output_folder = r"G:\U-Z\USFWS_CowCreekConceptualFishPassageDesign_230249\GIS\Feature_Data\Clipped" # Replace with your output folder
+clip_features = r"G:\U-Z\USFWS_CowCreekConceptualFishPassageDesign_230249\GIS\PRO\CowCreek\Default.gdb\clipArea"  # Replace with your polygon you want to clip everything to
+
+result = BatchClip(input_folder, clip_features, output_folder)
+if "completed successfully" in result:
+    print(result)
+else:
+    print("Error:", result)
