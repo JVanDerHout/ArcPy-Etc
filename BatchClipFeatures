@@ -1,11 +1,18 @@
 #This code is to batch clip feature data
-#It requires the input data to all be at the same level within the folder
+#before you start make sure you have the following set up: 
+#1. source features folder with all input data to all be at the same level within the folder
+#2. file path to your desired output folder
+#3. polygon of desired clip area
+
+#once you have those three items above, replace them in the chunk after "RETURN"
+#then open ArcPy and run the script
 
 def BatchClip(input_folder, clip_features, output_folder):
     arcpy.env.workspace = input_folder
     
     input_features = arcpy.ListFeatureClasses()  # Lists all feature classes in the input folder
-    
+
+#rename output files with the prefix "Clip_" + their original name
     for feature in input_features:
         # Create a unique output feature class name for each input feature class
         output_name = "Clip_" + feature  # Modify this naming convention as needed
@@ -27,8 +34,8 @@ def BatchClip(input_folder, clip_features, output_folder):
                 cursor.updateRow(row)
     
     return
-input_folder = r"G:\U-Z\USFWS_CowCreekConceptualFishPassageDesign_230249\GIS\Feature_Data\ToBeClipped" # Replace with your 
-output_folder = r"G:\U-Z\USFWS_CowCreekConceptualFishPassageDesign_230249\GIS\Feature_Data\Clipped" # Replace with your output folder
+input_folder = r"G:\U-Z\USFWS_CowCreekConceptualFishPassageDesign_230249\GIS\Feature_Data\ToBeClipped" # Replace with file path to the files you want clipped
+output_folder = r"G:\U-Z\USFWS_CowCreekConceptualFishPassageDesign_230249\GIS\Feature_Data\Clipped" # Replace with your file path to your desired output folder
 clip_features = r"G:\U-Z\USFWS_CowCreekConceptualFishPassageDesign_230249\GIS\PRO\CowCreek\Default.gdb\clipArea"  # Replace with your polygon you want to clip everything to
 
 result = BatchClip(input_folder, clip_features, output_folder)
