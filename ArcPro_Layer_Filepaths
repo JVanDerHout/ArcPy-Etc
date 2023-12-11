@@ -1,5 +1,4 @@
-#identify the sources of layers within a map without having to open it. 
-#designed to function if the map is saved as a standalone .mapx file
+#identify the sources of layers of all maps within a Pro project without having to open it. 
 
 import arcpy
 
