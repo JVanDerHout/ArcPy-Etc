@@ -1,0 +1,25 @@
+#identify the sources of layers within a map without having to open it. 
+#designed to function if the map is saved as a standalone .mapx file
+
+import arcpy
+
+# Set the path to your aprx project
+aprx_path = r"\\neo\Terra\ClientFiles\U-Z\USBR_TribHabProjectCompletionReports_220249\GIS\MXD\MiddleForkJD\MiddleForkJD.aprx"
+
+# Create an ArcGISProject object with the specified aprx file
+aprx = arcpy.mp.ArcGISProject(aprx_path)
+
+# Accessing maps in the project
+for map_obj in aprx.listMaps():
+    print(f"Map Name: {map_obj.name}")
+
+    # Accessing layers and their data sources within each map
+    for lyr in map_obj.listLayers():
+        print(f"  Layer Name: {lyr.name}")
+        if lyr.supports("dataSource"):
+            print(f"    Data Source: {lyr.dataSource}")
+        else:
+            print("    No data source information available")
+
+# Release ArcGIS Pro project
+del aprx
