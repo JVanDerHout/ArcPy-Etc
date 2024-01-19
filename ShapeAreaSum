@@ -1,0 +1,8 @@
+#use this to sum all the shape area values in your attribute table for a given feature class 
+import arcpy
+
+# Replace "Basin_Alt1" with the name of your feature class
+basin_fc = "Basin_Alt1"
+
+total_area = sum(row[0] for row in arcpy.da.SearchCursor(basin_fc, ["Shape_Area"])
+print("Total Shape Area for BasinAlt1: {:0.2f}".format(total_area))
