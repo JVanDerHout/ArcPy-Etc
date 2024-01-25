@@ -1,0 +1,126 @@
+#use in calculate field to rename parcel type into categories
+#developed for ramsey county parcel data for lower phalen creek
+
+#In expression field
+calculate_field(!LandUseCod!)
+
+#In code block
+def calculate_field(LandUseCod):
+    if LandUseCod == "SMALL (UNDER 10,000 SF) DET. RETAIL":
+        return "Commercial/Business"
+    elif LandUseCod == "COMMERCIAL VACANT LAND":
+        return "Commercial/Business"
+    elif LandUseCod == "APARTMENT VACANT LAND":
+        return "Residentals"
+    elif LandUseCod == "TWO FAMILY DWELLING - UP/DWN":
+        return "Residental"
+    elif LandUseCod == "SINGLE FAMILY DWELLING, PLATTED LOT":
+        return "Residental"
+    elif LandUseCod == "AUTOMOTIVE SERVICE STATION":
+        return "Commercial/Business"
+    elif LandUseCod == "OFFICE BUILDING 1-2 STORIES":
+        return "Commercial/Business"
+    elif LandUseCod == "MIXED RESID/COMMERCIAL":
+        return "Residental"
+    elif LandUseCod == "2ND RESID 4+ UNITS, CLASS APT":
+        return "Residental"
+    elif LandUseCod == "APARTMENTS 4-6 RENTAL UNITS":
+        return "Residental"
+    elif LandUseCod == "RESIDENTIAL, VACANT LAND, LOT":
+        return "Residental"
+    elif LandUseCod == "COMM LD&IMPRO OWN BY PUB UTI TH RAIL":
+        return "Transportation"
+    elif LandUseCod == "MANUFACTURING & ASSEMBLY LIGHT":
+        return "Commercial/Business"
+    elif LandUseCod == "RES/EXEMPT SINGLE FAMILY DWELLING":
+        return "Residental"
+    elif LandUseCod == "THREE FAMILY DWELLING, PLATTED LOT":
+        return "Residental"
+    elif LandUseCod == "EXEMPT, CHURCH, PUBLIC WORSHIP, PRIV":
+        return "Commercial/Business"
+    elif LandUseCod == "CONVENIENCE STORE":
+        return "Commercial/Business"
+    elif LandUseCod == "RAILROAD REAL PROP USED IN OPERATION":
+        return "Transportation"
+    elif LandUseCod == "EXEMPT, VACANT LAND":
+        return "Gov/Public"
+    elif LandUseCod == "EXEMPT PROP. OWNED BY BD OF EDUC.":
+        return "Gov/Public"
+    elif LandUseCod == "SMALL STRIP CENTER":
+        return "Commercial/Business"
+    elif LandUseCod == "IND WAREHOUSE":
+        return "Commercial/Business"
+    elif LandUseCod == "SINGLE FAMILY W/ACCESSORY UNIT":
+        return "Residental"
+    elif LandUseCod == "RESID/EXEMPT VACANT LAND":
+        return "Residental"
+    elif LandUseCod == "APARTMENTS 7-19 RENTAL UNITS":
+        return "Residental"
+    elif LandUseCod == "TWIN HOME":
+        return "Residental"
+    elif LandUseCod == "FUNERAL HOME":
+        return "Commercial/Business"
+    elif LandUseCod == "TWO FAMILY DWELLING - SIDE/SIDE":
+        return "Residental"
+    elif LandUseCod == "OTHER INDUSTRIAL STRUCTURE":
+        return "Commercial/Business"
+    elif LandUseCod == "INDUSTRIAL, VACANT LAND":
+        return "Commercial/Business"
+    elif LandUseCod == "APARTMENT MISC IMPROVEMENT":
+        return "Residental"
+    elif LandUseCod == "APARTMENTS 20-49 RENTAL UNITS":
+        return "Residental"
+    elif LandUseCod == "EXEMPT, WELFARE/CHARIT FACILITY":
+        return "Commercial/Business"
+    elif LandUseCod == "EXEMPT PROP. OWNED BY STATE OF MN":
+        return "Gov/Public"
+    elif LandUseCod == "RESIDENTIAL, OTHER":
+        return "Residental"
+    elif LandUseCod == "TRUCK TERMINAL":
+        return "Transportation"
+    elif LandUseCod == "EXEMPT PROP. OWNED BY MUNICIPALS":
+        return "Gov/Public"
+    elif LandUseCod == "AUTO SALES & SERVICE CTR":
+        return "Commercial/Business"
+    elif LandUseCod == "OFFICE BUILDING 3+ STORIES":
+        return "Commercial/Business"
+    elif LandUseCod == "EXEMPT CLINIC":
+        return "Commercial/Business"
+    elif LandUseCod == "COMMUNITY SHOPPING CENTER":
+        return "Commercial/Business"
+    elif LandUseCod == "SUPERMARKET":
+        return "Commercial/Business"
+    elif LandUseCod == "FOUNDERY & HEAVY MFG PLANT":
+        return "Commercial/Business"
+    elif LandUseCod == "EXEMPT PROP. OWNED BY COUNTY":
+        return "Commercial/Business"
+    elif LandUseCod == "DAYCARE CENTER":
+        return "Commercial/Business"
+    elif LandUseCod == "FOOD&DRINK PROCESS PLANT & STGE":
+        return "Commercial/Business"
+    elif LandUseCod == "TWO RESIDENCES ON ONE PARCEL":
+        return "Residental"
+    elif LandUseCod == "MEDICAL CLINIC":
+        return "Commercial/Business"
+    elif LandUseCod == "DRIVE-IN REST/FOOD SRV FACILITY":
+        return "Commercial/Business"
+    elif LandUseCod == "TOWNHOME - TICO":
+        return "Residental"
+    elif LandUseCod == "TOWNHOME - NON-TAX OUTLOT":
+        return "Residental"
+    elif LandUseCod == "RESIDENTIAL CO-OP":
+        return "Residental"
+    elif LandUseCod == "FULL SERVICE BANK":
+        return "Commercial/Business"
+    elif LandUseCod == "EXEMPT, OFFICE BUILDING":
+        return "Commercial/Business"
+    elif LandUseCod == "NEIGHBORHOOD SHOPPING CENTER":
+        return "Commercial/Business"
+    elif LandUseCod == "MEDIUM DETACHED RETAIL":
+        return "Commercial/Business"
+    elif LandUseCod == "TOWNHOME - OUTER UNIT":
+        return "Residental"
+    elif LandUseCod == "TOWNHOME-INNER UNIT":
+        return "Residental"
+    else:
+        return "Uknown"
