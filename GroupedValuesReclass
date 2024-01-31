@@ -1,0 +1,17 @@
+# Call the function with the ElevFt field
+calculate_hab_zone(!ElevFt!)
+
+def calculate_hab_zone(elevation):
+    if 10 <= elevation <= 25:
+        return "Off-Channel Rearing and Refugia Habitat"
+    elif 26 <= elevation <= 33:
+        return "Riparian Basalt Habitat"
+    elif 34 <= elevation <= 59:
+        return "Riparian Forest and Scrub"
+    elif 60 <= elevation <= 150:
+        return "Upland Forest and Shrub"
+    elif elevation >= 151:
+        return "Oak Woodland Savanna"
+    else:
+        return "None"  # or any default value if needed
+
