@@ -1,0 +1,22 @@
+#make a new column with the text after "-" for attribute table data formatted as "Figure 1 - County Road 749"
+
+import arcpy
+
+arcpy.env.workspace = r"M:\Projects_Working\Platte_Elwood\GIS\Feature_Data\PhotoMap\PhotoPoints.gdb"
+
+feature_class = "Points"
+field_name = "Name"
+
+new_field_name = "Description"
+arcpy.AddField_management(feature_class, new_field_name, "TEXT")
+
+# Update the new field with the text after the hyphen
+with arcpy.da.UpdateCursor(feature_class, [field_name, new_field_name]) as cursor:
+    for row in cursor:
+        name = row[0]
+        if "-" in name:
+            text_after_hyphen = name.split("-")[1].strip()
+            row[1] = text_after_hyphen
+            cursor.updateRow(row)
+
+print("Text after hyphen extracted and populated into the new column successfully.")
