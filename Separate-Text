@@ -20,3 +20,57 @@ with arcpy.da.UpdateCursor(feature_class, [field_name, new_field_name]) as curso
             cursor.updateRow(row)
 
 print("Text after hyphen extracted and populated into the new column successfully.")
+
+## use below if you want to then remove the split text from the first column
+## RUN IN NEW COMMAND
+
+import arcpy
+
+arcpy.env.workspace = r"M:\Projects_Working\Platte_Elwood\GIS\Feature_Data\PhotoMap\PhotoPoints.gdb"
+
+# Set the name of the feature class and the field you want to work with
+feature_class = "Points"
+field_name = "Name"
+
+# Update the original "Name" field to remove text starting from the hyphen
+with arcpy.da.UpdateCursor(feature_class, [field_name]) as cursor:
+    for row in cursor:
+        name = row[0]
+        if "-" in name:
+            text_before_hyphen = name.split("-")[0].strip()
+            row[0] = text_before_hyphen
+            cursor.updateRow(row)
+
+print("Text before hyphen extracted successfully.")
+Text before hyphen extracted successfully.
+import arcpy
+
+# Set your workspace environment
+arcpy.env.workspace = r"M:\Projects_Working\Platte_Elwood\GIS\Feature_Data\PhotoMap\PhotoPoints.gdb"
+
+# Set the name of the feature class and the field you want to work with
+feature_class = "Points"
+field_name = "Name"
+
+# Add a new field to hold the modified "Name" values
+new_field_name = "Figure"
+arcpy.AddField_management(feature_class, new_field_name, "TEXT")
+
+# Update the new field with the modified "Name" values
+with arcpy.da.UpdateCursor(feature_class, [field_name, new_field_name]) as cursor:
+    for row in cursor:
+        name = row[0]
+        if "-" in name:
+            text_before_hyphen = name.split("-")[0].strip()
+            row[1] = text_before_hyphen
+        else:
+            row[1] = name
+        cursor.updateRow(row)
+
+# Delete the original "Name" field
+arcpy.DeleteField_management(feature_class, field_name)
+
+# Rename the new field to "Name"
+arcpy.AlterField_management(feature_class, new_field_name, field_name)
+
+print("Text before hyphen extracted and updated successfully.")
