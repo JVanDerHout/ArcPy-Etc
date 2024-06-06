@@ -1,10 +1,14 @@
 #create new notebook in ArcGIS Pro
-#replace line 10 with actual file path for desired export folder
+#replace line 13 with actual file path for desired export folder
 
-import arcpy,os
+import arcpy
+import os
 
 aprx = arcpy.mp.ArcGISProject("CURRENT")
 
-for lyt in aprx.listLayouts():
+resolution = 300  # Set resolution to 300 DPI
+georef_info = True  # Include georeference information
 
-  lyt.exportToPDF(os.path.join(r"file path", f"{lyt.name}"), clip_to_elements=False)
+for lyt in aprx.listLayouts():
+    output_path = os.path.join(r"export file path goes here", f"{lyt.name}.pdf")
+    lyt.exportToPDF(output_path, resolution=resolution, clip_to_elements=False, georef_info=georef_info)
